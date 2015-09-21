@@ -334,8 +334,16 @@ OSStatus MicoSpiInitialize( const mico_spi_device_t* spi )
 
   if( platform_spi_drivers[spi->port].spi_mutex == NULL)
     mico_rtos_init_mutex( &platform_spi_drivers[spi->port].spi_mutex );
+
+  if (spi->chip_select  != MICO_GPIO_NONE)
+  {
+        config.chip_select = &platform_gpio_pins[spi->chip_select];
+  }
+  else
+   {
+         config.chip_select = NULL;
+  }
   
-  config.chip_select = &platform_gpio_pins[spi->chip_select];
   config.speed       = spi->speed;
   config.mode        = spi->mode;
   config.bits        = spi->bits;
@@ -369,19 +377,27 @@ OSStatus MicoSpiTransfer( const mico_spi_device_t* spi, const mico_spi_message_s
   platform_spi_config_t config;
   OSStatus err = kNoErr;
 
-  if ( spi->port >= MICO_SPI_NONE )
-    return kUnsupportedErr;
+  //if ( spi->port >= MICO_SPI_NONE )
+  //  return kUnsupportedErr;
   
-  if( platform_spi_drivers[spi->port].spi_mutex == NULL)
-    mico_rtos_init_mutex( &platform_spi_drivers[spi->port].spi_mutex );
+  //if( platform_spi_drivers[spi->port].spi_mutex == NULL)
+  //  mico_rtos_init_mutex( &platform_spi_drivers[spi->port].spi_mutex );
+
+  //if (spi->chip_select !=  MICO_GPIO_NONE)
+  // {
+        config.chip_select = &platform_gpio_pins[spi->chip_select];
+  // }
+ // else
+  // {
+   //      config.chip_select = NULL;
+   //}
   
-  config.chip_select = &platform_gpio_pins[spi->chip_select];
   config.speed       = spi->speed;
   config.mode        = spi->mode;
   config.bits        = spi->bits;
   
   mico_rtos_lock_mutex( &platform_spi_drivers[spi->port].spi_mutex );
-  err = platform_spi_init( &platform_spi_drivers[spi->port], &platform_spi_peripherals[spi->port], &config );
+ // err = platform_spi_init( &platform_spi_drivers[spi->port], &platform_spi_peripherals[spi->port], &config );
   err = platform_spi_transfer( &platform_spi_drivers[spi->port], &config, segments, number_of_segments );
   mico_rtos_unlock_mutex( &platform_spi_drivers[spi->port].spi_mutex );
 
