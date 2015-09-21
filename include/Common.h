@@ -187,6 +187,16 @@ typedef int32_t         OSStatus;
 //MXCHIP added for module
 #define EWOULDBLOCK 35      /* Operation would block */
 
+// Error code in Object in the range -6800 to -6900
+#define kObjFullErr                 -6800
+#define kObjNotExistErr             -6801
+#define kDistFullErr                -6802
+#define kDistNotEixstErr            -6803
+#define kSubFullErr                 -6804
+#define kSubExistErr                -6805
+#define kSubNotExistErr             -6806
+#define kNoMsgErr                   -6807
+
 
 // ==== C TYPE SAFE MACROS ====
 //---------------------------------------------------------------------------------------------------------------------------
