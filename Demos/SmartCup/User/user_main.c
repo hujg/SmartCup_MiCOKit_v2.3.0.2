@@ -48,7 +48,7 @@ char url_path[16];
 static mico_thread_t user_downstrem_thread_handle = NULL;
 static mico_thread_t user_upstream_thread_handle = NULL;
 static mico_thread_t ObjectModule_thread_handle = NULL;
-static mico_thread_t Music_thread_handle = NULL;
+//static mico_thread_t Music_thread_handle = NULL;
   
 extern void user_downstream_thread(void* arg);
 extern void user_upstream_thread(void* arg);

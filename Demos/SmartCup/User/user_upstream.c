@@ -101,7 +101,7 @@ void user_upstream_thread(void* arg)
             else {
                 // upload data string to fogcloud, the seconde param(NULL) means send to defalut topic: '<device_id>/out'
                 MiCOFogCloudMsgSend(app_context, NULL, (unsigned char*)upload_data, strlen(upload_data));
-                user_log("ready sended, %s", (unsigned char*)upload_data);
+                user_log("ready sended, <topic:%s> <data:%s>", app_context->appConfig->fogcloudConfig.deviceId, (unsigned char*)upload_data);
                 err = kNoErr;
             }
             
