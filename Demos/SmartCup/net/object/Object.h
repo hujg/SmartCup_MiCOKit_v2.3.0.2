@@ -20,11 +20,11 @@ History:
 
 
 // Max number of Object
-#define MAX_OBJECT_NUM                  4
+#define MAX_OBJECT_NUM                  3
 // Max number of subscriber in one Object
 #define MAX_SUBSCRIBE_NUM_IN_OBJECT     4
 // Max number of dist in one Object
-#define MAX_DIST_NUM_IN_OBJECT          6
+#define MAX_DIST_NUM_IN_OBJECT          5
 // objName[] string length
 #define ESM_OBJECT_OBJECT_NAME_MAX_LENGTH   16
 // distName[] string length

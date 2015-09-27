@@ -15,7 +15,7 @@ History:
 #include "MICO.h"
 
 // for MICO
-#define MemMng_DBG(M, ...) custom_log("MemMng > DBG", M, ##__VA_ARGS__)
+#define MemMng_DBG(M, ...) //custom_log("MemMng > DBG", M, ##__VA_ARGS__)
 #define MemMng_ERR(M, ...) custom_log("MemMng > ERR", M, ##__VA_ARGS__)
 
 // if Memery used

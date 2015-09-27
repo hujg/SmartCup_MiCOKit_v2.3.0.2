@@ -55,7 +55,7 @@ extern void user_upstream_thread(void* arg);
 extern void ObjectModule_Thread(void* arg);
 extern void Music_Thread(void* arg);
 
-
+#if 0
 /* user main function, called by AppFramework after system init done && wifi
  * station on in user_main thread.
  */
@@ -116,3 +116,69 @@ exit:
   mico_rtos_delete_thread(NULL);  // delete current thread
   return err;
 }
+
+#else
+
+void net_test( app_context_t * const app_context )
+{
+
+  mico_thread_sleep(10);
+  user_log("net_test: Running");
+  // test
+  if(!MiCOFogCloudIsActivated(app_context)) 
+  {
+    user_log("ERR: net_test: FogCloud disconnected");
+  }
+  
+}
+
+OSStatus net_init( app_context_t * const app_context )
+{
+  user_log_trace();
+  OSStatus err = kUnknownErr;
+
+  require(app_context, exit);
+  
+  MemInit();
+  SysComInit();
+  ObjectInit();
+  ObjDeviceInit();
+  ObjLightsInit();
+  ObjMusicInit();
+ 
+  printf("net_init: Start Create Threads");
+  
+  // create ObjectModule thread
+  err = mico_rtos_create_thread(&ObjectModule_thread_handle,
+                                MICO_APPLICATION_PRIORITY,
+                                "ObjectModule",
+                                ObjectModule_Thread,
+                                STACK_SIZE_OBJECTMODULE_THREAD,
+                                app_context);
+  require_noerr_action( err, exit, user_log("ERROR: Create ObjectModule thread failed!") );
+  
+  // start the downstream thread to handle user command
+  err = mico_rtos_create_thread(&user_downstrem_thread_handle, MICO_APPLICATION_PRIORITY, "user_downstream", 
+                                user_downstream_thread, STACK_SIZE_USER_DOWNSTREAM_THREAD, 
+                                app_context );
+  require_noerr_action( err, exit, user_log("ERROR: create user_downstream thread failed!") );
+    
+  // start the upstream thread to upload temperature && humidity to user
+  err = mico_rtos_create_thread(&user_upstream_thread_handle, MICO_APPLICATION_PRIORITY, "user_upstream", 
+                                  user_upstream_thread, STACK_SIZE_USER_UPSTREAM_THREAD, 
+                                  app_context );
+  require_noerr_action( err, exit, user_log("ERROR: create user_uptream thread failed!") );
+  
+  return kNoErr;
+
+exit:
+  if(kNoErr != err){
+    printf("ERROR: net_init thread exit with err=%d", err);
+  }
+  mico_rtos_delete_thread(NULL);  // delete current thread
+  return err;
+}
+
+#endif
+
+

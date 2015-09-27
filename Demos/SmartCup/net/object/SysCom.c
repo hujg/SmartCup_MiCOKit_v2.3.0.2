@@ -12,7 +12,7 @@ History:
 #include <API_MSG.h>
 
 // for MICO
-#define SysCom_DBG(M, ...) custom_log("SysCom > DBG", M, ##__VA_ARGS__)
+#define SysCom_DBG(M, ...) //custom_log("SysCom > DBG", M, ##__VA_ARGS__)
 #define SysCom_ERR(M, ...) custom_log("SysCom > ERR", M, ##__VA_ARGS__)
 
 

@@ -9,7 +9,10 @@
 
 #include "MiCO.h" 
 #include "syscom.h"
+#include "MICOAppDefine.h"
 
+extern void net_test( app_context_t * const app_context );
+extern OSStatus net_init( app_context_t * const app_context );
 
 /*　喝水提醒模式 */
 typedef enum
@@ -140,7 +143,6 @@ void MP3_handleThread(void *inContext)
     u32 ret = 0;
     u8  *pBuf = NULL;
     
-    printf( "This is MP3_handleThread.\r\n");
     
      /* 检测是否插上SD卡 */
      if (MP3_sdCardDetect() == 0)
@@ -151,6 +153,7 @@ void MP3_handleThread(void *inContext)
          mico_thread_sleep( 1 );
        }
     }
+
      /* MP3初始化　*/   
     if (MP3_init() == 0)
     {
@@ -160,12 +163,12 @@ void MP3_handleThread(void *inContext)
          mico_thread_sleep( 1 );
        }
     }
-  
+
     /* 获取SD卡容量信息 */
     MP3_getSdSize(&sdSizeInfo);
     printf("%d MB total drive space.\r\n" "%d MB available.\r\n",
            sdSizeInfo.totalSize, sdSizeInfo.availableSize);
-  
+ 
     /* 获取MP3文件总数 */
     ret = MP3_getMp3FileNum("0:/MUSIC");
     printf("mp3FileNum=%d\r\n", ret);
@@ -223,10 +226,18 @@ void BAT_handleThread(void *inContext)
 }
 
 
-int application_start( void )
+/* user main function, called by AppFramework after system init done && wifi
+ * station on in user_main thread.
+ */
+OSStatus user_main( app_context_t * const app_context )
 {
   OSStatus err = kNoErr;
-   int time_sencond = 50*1000;  /* 60s */
+  int time_sencond = 50*1000;  /* 60s */
+   
+
+  require(app_context, exit);
+  net_init(app_context);
+
   /* Create a new thread */
 
   err = mico_rtos_create_thread(NULL, MICO_APPLICATION_PRIORITY, "RGB_LED", LED_handleThread, 1024, NULL );
@@ -255,10 +266,16 @@ int application_start( void )
   while(1)
   {
    // printf("this is main thread.\r\n");
-    mico_thread_msleep( 500 );
+     //net_test(app_context);
+      mico_thread_sleep(10);
   }
   
 exit:
+  if(kNoErr != err){
+    printf("ERROR: user_main thread exit with err=%d", err);
+  }
   mico_rtos_delete_thread(NULL);
   return kNoErr;  
 }
+
+

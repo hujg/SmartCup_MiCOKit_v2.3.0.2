@@ -16,7 +16,7 @@ FRESULT res;
 FATFS fs; 
 FIL fd;      /* file objects */
 
-u8 const textFileBuffer[] = "I love you";
+//u8 const textFileBuffer[] = "I love you";
 
 
 const u8 *FILE_TYPE_TBL[6][13]=
@@ -261,6 +261,7 @@ u8 MP3_playSong(const char *pName)
 	fmp3=(FIL*)malloc(sizeof(FIL));	//申请内存
 	databuf=(u8*)malloc(READ_MP3_SIZE);		//开辟4096字节的内存区域
 	if(databuf==NULL||fmp3==NULL)rval=0XFF ;//内存申请失败.
+
 	if(rval==0)
 	{
         VS_HD_Reset();
@@ -278,17 +279,18 @@ u8 MP3_playSong(const char *pName)
 			VS_Load_Patch((u16*)vs1053b_patch,VS1053B_PATCHLEN);
 		} */ 				 		   		 						  
 		res=f_open(fmp3,(const TCHAR*)pName,FA_READ);//打开文件
-        printf("@res=%d, mp3Name=%s\r\n",res, pName);
+
 		//printf("sram :%d",mem_perused(0));
 		if(res==0)//打开成功.
 		{ 
 			VS_SPI_SpeedHigh();	//高速						   
 			while(rval==0)
 			{
+              
 				res=f_read(fmp3,databuf,READ_MP3_SIZE,(UINT*)&br);//读出4096个字节  
+              
 				i=0;   
-               // printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n");
-           
+
                 if (lastVol != vsset.mvol)  //检测音量是否重新配置
                 {
                     VS_Set_Vol(vsset.mvol);
@@ -296,8 +298,10 @@ u8 MP3_playSong(const char *pName)
                     //保存到配置文件
                 }      
 #if 1
+                mico_rtos_suspend_all_thread();
 				do//主播放循环
 			    {  	
+                    
 					if((VS_Send_MusicData(databuf+i)==0))//给VS10XX发送音频数据
 					{
 						i+=32;
@@ -316,9 +320,11 @@ u8 MP3_playSong(const char *pName)
 						}
 						//mp3_msg_show(fmp3->fsize);//显示信息	
                        
-					}	    	    
+					}	  
+                    
 				}while(i<READ_MP3_SIZE);//循环发送4096个字节 
-#endif               
+                 mico_rtos_resume_all_thread(); 
+#endif            
 				if(br!=READ_MP3_SIZE||res!=0)
 				{
 					rval=KEY_UP;

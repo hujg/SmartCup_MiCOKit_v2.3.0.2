@@ -332,12 +332,13 @@ const mico_logic_partition_t mico_partitions[] =
 #if defined ( USE_MICO_SPI_FLASH )
 const mico_spi_device_t mico_spi_flash =
 {
-  .port        = MICO_SPI_1,
-  .chip_select = FLASH_PIN_SPI_CS,
-  .speed       = 40000000,
-  .mode        = (SPI_CLOCK_RISING_EDGE | SPI_CLOCK_IDLE_HIGH | SPI_USE_DMA | SPI_MSB_FIRST ),
-  .bits        = 8
+    .port        = MICO_SPI_1,
+    .chip_select = FLASH_PIN_SPI_CS,
+    .speed       = 20000000,
+    .mode        = (SPI_CLOCK_RISING_EDGE | SPI_CLOCK_IDLE_HIGH | SPI_MSB_FIRST), //SPI_USE_DMA
+    .bits        = 8
 };
+
 #endif
 
 const platform_adc_t platform_adc_peripherals[] =

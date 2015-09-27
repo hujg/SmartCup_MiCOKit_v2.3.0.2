@@ -18,6 +18,7 @@ extern const platform_spi_t        platform_spi_peripherals[];
 extern platform_spi_driver_t       platform_spi_drivers[];
 extern const platform_gpio_t      platform_gpio_pins[];
 
+
 u8  SD_Type=0;//SD卡的类型 
 ////////////////////////////////////移植修改区///////////////////////////////////
 //移植时候的接口
@@ -31,12 +32,13 @@ u8 SD_SPI_ReadWriteByte(u8 data)
     segments.tx_buffer = &data;
     segments.rx_buffer = &rx_data;
     segments.length = 1;
-     
+    
     if ( kNoErr != MicoSpiTransfer( &mico_spi_SD,  &segments,  1))
     {
+
         return 0;
     }
-
+    
     return rx_data;
 }
 
@@ -64,7 +66,7 @@ u8  SD_SPI_Init(void)
         return 0;
         /*@+mustdefine@*/
     }
-    
+  
     MicoGpioInitialize( (mico_gpio_t)SD_PIN_SPI_CS, OUTPUT_PUSH_PULL );
     SD_CS_Set();
     

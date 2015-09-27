@@ -8,16 +8,16 @@ History:
 
 #include <Object.h>
 #include <API_MSG.h>
-#include <SysCom.h>
+#include "SysCom.h"
 // for MICO
-#include "MICO.h"
+//#include "MICO.h"
 // for user
 #include <ObjDevice.h>
 #include <ObjLights.h>
 #include <ObjMusic.h>
 
 // for MICO
-#define Object_DBG(M, ...) custom_log("Object > DBG", M, ##__VA_ARGS__)
+#define Object_DBG(M, ...) //custom_log("Object > DBG", M, ##__VA_ARGS__)
 #define Object_INF(M, ...) custom_log("Object > INF", M, ##__VA_ARGS__)
 #define Object_ERR(M, ...) custom_log("Object > ERR", M, ##__VA_ARGS__)
 #define Object_Log_Trace() custom_log_trace("OBJECTMODULE")

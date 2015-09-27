@@ -50,7 +50,7 @@ void user_upstream_thread(void* arg)
   app_context_t *app_context = (app_context_t *)arg;
   json_object *send_json_object = NULL;
   const char *upload_data = NULL;
-  int value = 10;
+  u16 value = 10;
   char str[16] = NULL;
     
   require(app_context, exit);
