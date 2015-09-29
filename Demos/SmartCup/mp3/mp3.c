@@ -298,7 +298,7 @@ u8 MP3_playSong(const char *pName)
                     //保存到配置文件
                 }      
 #if 1
-                mico_rtos_suspend_all_thread();
+                
 				do//主播放循环
 			    {  	
                     
@@ -323,7 +323,7 @@ u8 MP3_playSong(const char *pName)
 					}	  
                     
 				}while(i<READ_MP3_SIZE);//循环发送4096个字节 
-                 mico_rtos_resume_all_thread(); 
+
 #endif            
 				if(br!=READ_MP3_SIZE||res!=0)
 				{

@@ -104,6 +104,7 @@ void LED_handleThread(void *inContext)
            && cupTimeObj.playMode != PLAY_ONLY_MP3)
        {
           printf("Playing led ........\r\n");
+#if 0
           for (ledValue = 0; ledValue < 100; ledValue++)
           {
               LED_openRGB(100 - ledValue, ledValue, ledValue);
@@ -117,6 +118,13 @@ void LED_handleThread(void *inContext)
               mico_thread_msleep(15);
           } 
           mico_thread_msleep(100);
+#else
+          /* 秒闪 */
+          LED_openRGB(50, 50, 50);
+          mico_thread_msleep(500);
+          LED_openRGB(0, 0, 0);
+          mico_thread_msleep(500);
+#endif
           
           /* 只有LED模式时，LED只演示三次 */
           if (cupTimeObj.playMode == PLAY_ONLY_LED)
@@ -173,6 +181,7 @@ void MP3_handleThread(void *inContext)
     ret = MP3_getMp3FileNum("0:/MUSIC");
     printf("mp3FileNum=%d\r\n", ret);
 
+#if 0
     /* 写文件 */
     pBuf = malloc(512);
     if (pBuf != NULL)
@@ -196,7 +205,8 @@ void MP3_handleThread(void *inContext)
     {
        printf("remove mp3 file failed !\r\n");
     }
-
+#endif
+    
     /* 播放指定歌曲和音量设置 */
     while(mico_rtos_get_semaphore(&cupTimeObj.playMp3_sem, MICO_WAIT_FOREVER) == kNoErr)
     {

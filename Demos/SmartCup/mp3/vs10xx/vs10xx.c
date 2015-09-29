@@ -417,13 +417,15 @@ u8 VS_Send_MusicData(u8* buf)
 {
 	u8 n;
 	if(VS_DQ!=0)  //送数据给VS10XX
-	{			   	 
+	{	
+        mico_rtos_suspend_all_thread();
 		VS_XDCS_Clr();  
         for(n=0;n<32;n++)
 		{
 			VS_SPI_ReadWriteByte(buf[n]);	 			
 		}
-		VS_XDCS_Set();     				   
+		VS_XDCS_Set();   
+        mico_rtos_resume_all_thread(); 
 	}else return 1;
 	return 0;//成功发送了
 }
