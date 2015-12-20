@@ -31,8 +31,8 @@
 /*------------------------------ product -------------------------------------*/
 #ifdef MICOKIT_3288
 // wes' product, replace it with your own product
-  #define PRODUCT_ID                   "e0ef908d"
-  #define PRODUCT_KEY                  "86cc4e1b-b581-442f-bc73-e6d91df77dd8"
+  #define PRODUCT_ID                   "af0d9d5c"
+  #define PRODUCT_KEY                  "67a58065-35bd-4ac1-8db0-1760e3fd5686"
 #elif  MICOKIT_3165
   #define PRODUCT_ID                   "740eec68"
   #define PRODUCT_KEY                  "1b8912d7-743d-4376-be37-0a9b5c6bb10b"
@@ -68,14 +68,13 @@
 
 #define STACK_SIZE_USER_DOWNSTREAM_THREAD 0x400
 #define STACK_SIZE_USER_UPSTREAM_THREAD   0x400
-#define STACK_SIZE_OBJECTMODULE_THREAD    0x200
 
 
 /* User provided configurations seed
  * If user configuration(params in flash) is changed, update this number to
  * indicate the bootloader to clean params in flash next time restart.
  */
-#define CONFIGURATION_VERSION          0x00000005
+#define CONFIGURATION_VERSION          0x00000002
 
 
 #endif  // __USER_CONFIG_H_

@@ -11,8 +11,7 @@
 #include "syscom.h"
 #include "MICOAppDefine.h"
 
-extern void net_test( app_context_t * const app_context );
-extern OSStatus net_init( app_context_t * const app_context );
+extern OSStatus net_main( app_context_t * const app_context );
 
 /*　喝水提醒模式 */
 typedef enum
@@ -90,7 +89,7 @@ static void  KEY_irq_handler( void* arg )
 /* 灯光处理线程 */
 void LED_handleThread(void *inContext)
 {
-    u8  ledValue = 0;
+    //u8  ledValue = 0;
     u8  playLedTimes = 0; //无播放音乐时，演示LED次数
     
     printf( "This is LED_handleThread.\r\n");
@@ -149,7 +148,7 @@ void MP3_handleThread(void *inContext)
 {
     SD_sizeInfo sdSizeInfo;
     u32 ret = 0;
-    u8  *pBuf = NULL;
+    //u8  *pBuf = NULL;
     
     
      /* 检测是否插上SD卡 */
@@ -246,7 +245,7 @@ OSStatus user_main( app_context_t * const app_context )
    
 
   require(app_context, exit);
-  net_init(app_context);
+  net_main(app_context);
 
   /* Create a new thread */
 

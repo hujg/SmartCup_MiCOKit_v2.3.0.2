@@ -11,7 +11,7 @@ $PROJ_DIR$\..\..\..\..\Demos\SmartCup\key
 $PROJ_DIR$\..\..\..\..\Demos\SmartCup\battery
 $PROJ_DIR$\..\..\..\..\Demos\SmartCup\net
 $PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\fogCloud
-$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object
+$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user
 
 
 

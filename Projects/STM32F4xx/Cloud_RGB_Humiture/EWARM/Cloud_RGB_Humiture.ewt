@@ -2204,76 +2204,52 @@
         </file>
       </group>
       <group>
-        <name>object</name>
+        <name>user</name>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\API_MSG.h</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\DeviceMonitor.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\MemMng.c</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\DeviceMonitor.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\MemMng.h</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\If_MO.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\ObjDevice.c</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\If_MO.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\ObjDevice.h</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\mico_config.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\Object.c</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\Object_int.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\Object.h</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\OMFactory.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\Object_int.h</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\OMFactory.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\ObjLights.c</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\user_config.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\ObjLights.h</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\user_downstream.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\ObjMusic.c</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\user_main.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\ObjMusic.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\SysCom.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\SysCom.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\object\ThreadMng.h</name>
+          <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user\user_upstream.c</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\mico_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user_downstream.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user_main.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\net\user_upstream.c</name>
-      </file>
     </group>
     <group>
-      <name>user</name>
+      <name>app</name>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\user\main.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\User\main.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\user\syscom.h</name>
+        <name>$PROJ_DIR$\..\..\..\..\Demos\SmartCup\User\syscom.h</name>
       </file>
     </group>
   </group>
@@ -2364,6 +2340,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\libraries\utilities\StringUtils.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\libraries\utilities\TimeUtils.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\libraries\utilities\TLVUtils.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\..\..\libraries\utilities\URLUtils.c</name>
