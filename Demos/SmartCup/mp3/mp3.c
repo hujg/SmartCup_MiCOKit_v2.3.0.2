@@ -227,7 +227,7 @@ u16 MP3_getMp3FileNum(u8 *path)
 	        res=f_readdir(&tdir,&tfileinfo);       		//读取目录下的一个文件
 	        if(res!=FR_OK||tfileinfo.fname[0]==0)break;	//错误了/到末尾了,退出		  
      		fn=(u8*)(*tfileinfo.lfname?tfileinfo.lfname:tfileinfo.fname);	
-            printf("歌曲名字: %s\r\n", fn);                   //显示歌曲名字
+            //printf("歌曲名字: %s\r\n", fn);                   //显示歌曲名字
 			res=f_typetell(fn);	
 			if((res&0XF0)==0X40)//取高四位,看看是不是音乐文件	
 			{
@@ -236,8 +236,66 @@ u16 MP3_getMp3FileNum(u8 *path)
 		}  
 	} 
 	free(tfileinfo.lfname);
+    //printf("目录%s下总共有%d首歌曲.\r\n",path, rval); //显示总歌曲数
 	return rval;
 }
+
+
+/*******************************************************************************
+函数名：MP3_getMp3FileName
+描述  ：获取指定路径和索引MP3的歌曲名称。
+参数  ：path:指定路径,如："0:/MUSIC", index: 指定索引值，其最大值为该目录下mp3文件总数
+       ，pMp3FileName:保存mp3名称空间首地址。
+返回值：0:失败，1：成功
+*******************************************************************************/
+u8 MP3_getMp3FileName(u8 *path, u8 index, u8 *pMp3FileName)
+{	  
+	u8 res = 0;
+	u16 rval=0;
+ 	DIR tdir;	 		//临时目录
+	FILINFO tfileinfo;	//临时文件信息		
+	u8 *fn;
+    
+    res=f_opendir(&tdir,(const TCHAR*)path); 	//打开目录
+  	tfileinfo.lfsize=_MAX_LFN*2+1;				//长文件名最大长度
+	tfileinfo.lfname=malloc(tfileinfo.lfsize);//为长文件缓存区分配内存
+    
+	if (res == FR_OK && tfileinfo.lfname != NULL)
+	{
+		while(1)//查询总的有效文件数
+		{
+	        res=f_readdir(&tdir,&tfileinfo);       		//读取目录下的一个文件
+	        if(res!=FR_OK||tfileinfo.fname[0]==0)break;	//错误了/到末尾了,退出		  
+     		fn=(u8*)(*tfileinfo.lfname?tfileinfo.lfname:tfileinfo.fname);	
+            
+			res=f_typetell(fn);	
+			if((res&0XF0)==0X40)//取高四位,看看是不是音乐文件	
+			{
+				rval++;//有效文件数增加1
+                if (rval == (index + 1))
+                {
+
+                    if (strlen(fn) < _MAX_LFN)
+                    {
+                      memcpy(pMp3FileName, fn, strlen(fn));
+                      res = 1;
+                     //printf("目录%s下第%d歌曲名为: %s\r\n",path,index, fn); //显示歌曲名字    
+                    }
+                    else
+                    {
+                        printf("FileName's space not enough !!!\r\n");
+                        res = 0;
+                    }
+                    break;
+                }
+			}	    
+		}  
+	} 
+	free(tfileinfo.lfname);
+	return res;
+}
+
+
 
 
 //播放一曲指定的歌曲	

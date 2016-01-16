@@ -89,12 +89,54 @@ static void  KEY_irq_handler( void* arg )
 /* 灯光处理线程 */
 void LED_handleThread(void *inContext)
 {
-    //u8  ledValue = 0;
+    u8  ledValue = 0;
     u8  playLedTimes = 0; //无播放音乐时，演示LED次数
     
     printf( "This is LED_handleThread.\r\n");
     LED_openRGB(0, 0, 0); //初始化关闭所有灯
     LED_closeRGB();
+#if 0 
+    while(1)
+    {
+          printf("Playing led ........\r\n");
+
+          for (ledValue = 0; ledValue < 100; ledValue++)
+          {
+              LED_openRGB(100 - ledValue, ledValue, ledValue);
+              mico_thread_msleep(15);
+          }
+          mico_thread_msleep(1000);
+          
+          for (ledValue = 100; ledValue > 0; ledValue--)
+          {
+              LED_openRGB(100 - ledValue, ledValue, ledValue);
+              mico_thread_msleep(15);
+          } 
+           LED_openRGB(0, 0, 0);
+          mico_thread_msleep(1000);
+
+          
+          LED_openRGB(100, 0, 0);
+          mico_thread_msleep(1000);
+          LED_openRGB(0, 0, 0);
+          
+          LED_openRGB(0, 100, 0);
+          mico_thread_msleep(1000);
+          LED_openRGB(0, 0, 0);
+          
+          LED_openRGB(0, 0, 100);
+          mico_thread_msleep(1000);
+          LED_openRGB(0, 0, 0);
+          mico_thread_msleep(1000);
+          
+          /* 秒闪 */
+          LED_openRGB(50, 50, 50);
+          mico_thread_msleep(500);
+          LED_openRGB(0, 0, 0);
+          mico_thread_msleep(500); 
+    
+    }
+#endif
     
      while(mico_rtos_get_semaphore(&cupTimeObj.playLed_sem, MICO_WAIT_FOREVER) == kNoErr)
     {
@@ -147,9 +189,9 @@ void LED_handleThread(void *inContext)
 void MP3_handleThread(void *inContext)
 {
     SD_sizeInfo sdSizeInfo;
-    u32 ret = 0;
-    //u8  *pBuf = NULL;
-    
+    u8 ret = 0;
+    u8  *pMp3FileName;
+    u16 mp3FileNum = 0, i;
     
      /* 检测是否插上SD卡 */
      if (MP3_sdCardDetect() == 0)
@@ -177,8 +219,20 @@ void MP3_handleThread(void *inContext)
            sdSizeInfo.totalSize, sdSizeInfo.availableSize);
  
     /* 获取MP3文件总数 */
-    ret = MP3_getMp3FileNum("0:/MUSIC");
-    printf("mp3FileNum=%d\r\n", ret);
+    mp3FileNum = MP3_getMp3FileNum("0:/MUSIC");
+    printf("mp3FileNum=%d\r\n", mp3FileNum);
+    
+    pMp3FileName = malloc(64); //申请mp3文件名缓冲
+    for(i = 0; i < mp3FileNum; i++)
+    {
+        memset(pMp3FileName,'\0', 64);
+        ret = MP3_getMp3FileName("0:/MUSIC", i, pMp3FileName);
+        if (ret)
+        {
+            printf("index = %d, mp3FileName=%s\r\n",i, pMp3FileName);
+        }
+    }
+    free(pMp3FileName); //释放空间
 
 #if 0
     /* 写文件 */
@@ -211,10 +265,10 @@ void MP3_handleThread(void *inContext)
     {
        if (cupTimeObj.playMode != PLAY_ONLY_LED)  //如果不是单单灯提醒喝水时
        {
-         MP3_setVolume(20);
+         MP3_setVolume(5);
          printf("MP3_getVolume=%d\r\n", MP3_getVolume());
 
-         ret = MP3_playSong("0:/MUSIC/水晶闹钟.mp3");  //播放指定歌曲
+         ret = MP3_playSong("0:/MUSIC/healthy_drink.mp3");  //播放指定歌曲
          printf("play over!!!!ret=%d\r\n", ret);
          mico_rtos_set_semaphore(&cupTimeObj.stopLed_sem);  //通知停止亮LED灯
        }
@@ -241,11 +295,11 @@ void BAT_handleThread(void *inContext)
 OSStatus user_main( app_context_t * const app_context )
 {
   OSStatus err = kNoErr;
-  int time_sencond = 50*1000;  /* 60s */
+  int time_sencond = 20*1000;  /* 60s */
    
 
-  require(app_context, exit);
-  net_main(app_context);
+ // require(app_context, exit);
+ // net_main(app_context);
 
   /* Create a new thread */
 
@@ -274,7 +328,7 @@ OSStatus user_main( app_context_t * const app_context )
    
   while(1)
   {
-   // printf("this is main thread.\r\n");
+      printf("this is main thread.\r\n");
      //net_test(app_context);
       mico_thread_sleep(10);
   }

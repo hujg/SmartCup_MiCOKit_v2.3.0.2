@@ -90,7 +90,7 @@
 
 
 #define	_USE_LFN	3		/* 0 to 3 设置为1,支持长文件名，并采用动态内存*/
-#define	_MAX_LFN	128		/* Maximum LFN length to handle (12 to 255) */
+#define	_MAX_LFN	64		/* Maximum LFN length to handle (12 to 255) */
 /* The _USE_LFN option switches the LFN feature.
 /
 /   0: Disable LFN feature. _MAX_LFN and _LFN_UNICODE have no effect.
